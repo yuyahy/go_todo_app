@@ -4,28 +4,34 @@ import (
 	"context"
 	"fmt"
 	"io"
+	"net"
 	"net/http"
 	"testing"
 
 	"golang.org/x/sync/errgroup"
 )
 
-func TestMainFunc(t *testing.T) {
-	go main()
-}
-
 func TestRun(t *testing.T) {
+	// ポートに0を指定すると動的に空いているポートを使用する
+	l, err := net.Listen("tcp", "localhost:0")
+	if err != nil {
+		t.Fatalf("failed to listen port : %v", err)
+	}
 	// キャンセル可能なContextを生成
 	ctx, cancel := context.WithCancel(context.Background())
 	// 複数のgoroutineをグループ化する
 	// →どれか一個のgoroutine内でエラーが発生した場合はすべてのgoroutineが停止する
 	eg, ctx := errgroup.WithContext(ctx)
 	eg.Go(func() error {
-		return run(ctx)
+		return run(ctx, l)
 	})
 	// エンドポイントに対してGETリクエストを送信する
 	in := "message"
-	rsp, err := http.Get("http://localhost:18080/" + in)
+	url := fmt.Sprintf("http://%s/%s", l.Addr().String(), in)
+	// リッスンしているポート番号を確認
+	t.Logf("try request to %q", url)
+
+	rsp, err := http.Get(url)
 	if err != nil {
 		t.Errorf("failed to get : %v", err)
 	}
