@@ -11,7 +11,7 @@ import (
 	"golang.org/x/sync/errgroup"
 )
 
-func TestRun(t *testing.T) {
+func TestServerRun(t *testing.T) {
 	// ポートに0を指定すると動的に空いているポートを使用する
 	l, err := net.Listen("tcp", "localhost:0")
 	if err != nil {
@@ -22,9 +22,14 @@ func TestRun(t *testing.T) {
 	// 複数のgoroutineをグループ化する
 	// →どれか一個のgoroutine内でエラーが発生した場合はすべてのgoroutineが停止する
 	eg, ctx := errgroup.WithContext(ctx)
-	eg.Go(func() error {
-		return run(ctx, l)
+	mux := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprintf(w, "Hello, %s!", r.URL.Path[1:])
 	})
+	eg.Go(func() error {
+		s := NewServer(l, mux)
+		return s.Run(ctx)
+	})
+
 	// エンドポイントに対してGETリクエストを送信する
 	in := "message"
 	url := fmt.Sprintf("http://%s/%s", l.Addr().String(), in)
