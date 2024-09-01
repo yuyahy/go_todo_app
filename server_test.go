@@ -22,11 +22,11 @@ func TestServerRun(t *testing.T) {
 	// 複数のgoroutineをグループ化する
 	// →どれか一個のgoroutine内でエラーが発生した場合はすべてのgoroutineが停止する
 	eg, ctx := errgroup.WithContext(ctx)
-	mux :=http.HandlerFunc(func(w http.ResponseWriter, r *http.Request){
-		fmt.Fprintf(w, "Hello, %s!",r.URL.Path[1:])
+	mux := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprintf(w, "Hello, %s!", r.URL.Path[1:])
 	})
 	eg.Go(func() error {
-		s:=NewServer(l,mux)
+		s := NewServer(l, mux)
 		return s.Run(ctx)
 	})
 
