@@ -1,10 +1,7 @@
 package handler
 
 import (
-	"net/http"
 	"testing"
-
-	"github.com/yuyahy/go_todo_app/entity"
 )
 
 func TestListTask(t *testing.T) {
@@ -12,36 +9,36 @@ func TestListTask(t *testing.T) {
 		status  int
 		rspFile string
 	}
-	tests := map[string]struct {
-		tasks []*entity.Task
-		want  want
-	}{
-		"ok": {
-			tasks: []*entity.Task{
-				{
-					ID:     1,
-					Title:  "test1",
-					Status: entity.TaskStatusTodo,
-				},
-				{
-					ID:     2,
-					Title:  "test2",
-					Status: entity.TaskStatusDone,
-				},
-			},
-			want: want{
-				status:  http.StatusOK,
-				rspFile: "testdata/list_task/ok_rsp.json.golden",
-			},
-		},
-		"empty": {
-			tasks: []*entity.Task{},
-			want: want{
-				status:  http.StatusOK,
-				rspFile: "testdata/list_task/empty_rsp.json.golden",
-			},
-		},
-	}
+	// tests := map[string]struct {
+	// 	tasks []*entity.Task
+	// 	want  want
+	// }{
+	// 	"ok": {
+	// 		tasks: []*entity.Task{
+	// 			{
+	// 				ID:     1,
+	// 				Title:  "test1",
+	// 				Status: entity.TaskStatusTodo,
+	// 			},
+	// 			{
+	// 				ID:     2,
+	// 				Title:  "test2",
+	// 				Status: entity.TaskStatusDone,
+	// 			},
+	// 		},
+	// 		want: want{
+	// 			status:  http.StatusOK,
+	// 			rspFile: "testdata/list_task/ok_rsp.json.golden",
+	// 		},
+	// 	},
+	// 	"empty": {
+	// 		tasks: []*entity.Task{},
+	// 		want: want{
+	// 			status:  http.StatusOK,
+	// 			rspFile: "testdata/list_task/empty_rsp.json.golden",
+	// 		},
+	// 	},
+	// }
 	// TODO: moqの実装が完了したら元に戻す
 	// for n, tt := range tests {
 	// 	tt := tt
