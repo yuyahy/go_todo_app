@@ -5,11 +5,11 @@ import (
 	"testing"
 
 	"github.com/DATA-DOG/go-sqlmock"
-	"github.com/google/go-cmp/cmp"
+	// "github.com/google/go-cmp/cmp"
 	"github.com/jmoiron/sqlx"
 	"github.com/yuyahy/go_todo_app/clock"
 	"github.com/yuyahy/go_todo_app/entity"
-	"github.com/yuyahy/go_todo_app/testutil"
+	// "github.com/yuyahy/go_todo_app/testutil"
 )
 
 // // TODO: user_id
