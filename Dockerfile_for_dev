@@ -1,2 +1,7 @@
 FROM golang:latest
 WORKDIR /go/src/
+
+RUN echo "if [ -t 1 ]; then" >> /root/.bashrc
+RUN echo "exec zsh" >> /root/.bashrc
+RUN echo "fi" >> /root/.bashrc
+ADD .zshrc $HOME

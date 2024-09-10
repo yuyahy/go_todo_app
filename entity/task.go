@@ -13,11 +13,14 @@ const (
 )
 
 // TODOタスクを表現する構造体
+// tagを設定しておく事で構造体へマッピングするのが楽になる
+// github.com/jmoiron/sqlx
 type Task struct {
-	ID      TaskID     `json:"id"`
-	Title   string     `json:"title"`
-	Status  TaskStatus `json:"status"`
-	Created time.Time  `json:"created"`
+	ID       TaskID     `json:"id" db:"id"`
+	Title    string     `json:"title" db:"title"`
+	Status   TaskStatus `json:"status" db:"status"`
+	Created  time.Time  `json:"created" db:"created"`
+	Modified time.Time  `json:"modified" db:"modified"`
 }
 
 type Tasks []*Task
