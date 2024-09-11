@@ -15,7 +15,6 @@ type RegisterUser struct {
 }
 
 func (r *RegisterUser) RegisterUser(ctx context.Context, name, password, role string) (*entity.User, error) {
-
 	pw, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 	if err != nil {
 		return nil, fmt.Errorf("cannot hash password: %w", err)
