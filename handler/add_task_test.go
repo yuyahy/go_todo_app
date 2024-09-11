@@ -61,7 +61,6 @@ func TestAddTask(t *testing.T) {
 					return &entity.Task{ID: 1}, nil
 				}
 				return nil, errors.New("error from mock")
-
 			}
 
 			sut := AddTask{
