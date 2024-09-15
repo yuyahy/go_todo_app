@@ -20,4 +20,3 @@ type User struct {
 func (u *User) ComparePassword(pw string) error {
 	return bcrypt.CompareHashAndPassword([]byte(u.Password), []byte(pw))
 }
-
