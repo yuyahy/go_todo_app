@@ -12,11 +12,11 @@ const (
 	TaskStatusDone  TaskStatus = "done"
 )
 
-// TODOタスクを表現する構造体
 // tagを設定しておく事で構造体へマッピングするのが楽になる
 // github.com/jmoiron/sqlx
 type Task struct {
 	ID       TaskID     `json:"id" db:"id"`
+	UserID   UserID     `json:"user_id" db:"user_id"`
 	Title    string     `json:"title" db:"title"`
 	Status   TaskStatus `json:"status" db:"status"`
 	Created  time.Time  `json:"created" db:"created"`
